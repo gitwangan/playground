@@ -2,6 +2,7 @@ package com.playground.config;
 
 import com.playground.filter.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +22,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
     private final JwtFilter jwtFilter;
+    @Value("${registeredUser.username}")
+    private String registeredUsername;
+    @Value("${registeredUser.password}")
+    private String registeredPassword;
 
     @Autowired
     public SecurityConfig(JwtFilter jwtFilter) {
@@ -34,7 +39,7 @@ public class SecurityConfig {
     }
     @Bean
     public UserDetailsService userDetailsService() {
-        return new InMemoryUserDetailsManager(User.withDefaultPasswordEncoder().username("user").password("password").roles("USER").build());
+        return new InMemoryUserDetailsManager(User.withDefaultPasswordEncoder().username(registeredUsername).password(registeredPassword).roles("USER").build());
     }
     @Bean
     public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {

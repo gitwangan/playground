@@ -1,7 +1,7 @@
 package com.playground.filter;
 
 import com.playground.util.JwtUtil;
-import com.playground.service.JwtUserDetailsService;
+import com.playground.service.impl.JwtUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
