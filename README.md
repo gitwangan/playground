@@ -1,3 +1,8 @@
+* Remove duplicate rows in table
+  * w/ id: `mysql> delete e1 from employee e1, employee e2 where e1.name = e2.name and e1.salary = e2.salary and e1.id < e2.id;`
+  * w/o id: `mysql> select distinct * from employee;`
+
+
 * Spring Security + JWT
   * Only one registered user, information in `application.properties`
   * `config.SecurityConfig`: defines beans required for authentication and filter chain. Disabled csrf and added a JwtFilter in the filter chain.
