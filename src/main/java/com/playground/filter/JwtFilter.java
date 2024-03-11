@@ -31,7 +31,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (token != null && jwtUtil.validateJwt(token)) { // login req has null token, thus bypassing
+        if (token != null && token.length() > 7 && token.substring(0, 7).equals("Bearer ") && jwtUtil.validateJwt(token.substring(7))) { // login req has null token, thus bypassing
             UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(jwtUtil.getUsername(token));
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

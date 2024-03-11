@@ -20,6 +20,7 @@ public class LoginController {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
+
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
         Authentication authenticationRequest = UsernamePasswordAuthenticationToken.unauthenticated(user.getUsername(), user.getPassword());
