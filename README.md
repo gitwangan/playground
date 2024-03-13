@@ -4,7 +4,8 @@
     * Using partition by: `mysql> delete from employee where id in (select id from (select id, row_number() over(partition by name, salary) row_num from employee) e where e.row_num > 1);
       `
   * w/o primary key:
-    * Using inner join + partition by: `mysql> delete e1 from employee e1, employee e2 where e1.name = e2.name and e1.salary = e2.salary and e1.id > e2.id;`
+    * Using inner join + partition by: `mysql> delete e1 from employee e1, (select *, row_number() over(partition by name, salary) row_id from employee) e2 where e1.name = e2.name and e1.salary = e2.salary and e2.row_id > 1;
+      `
 
 
 * Spring Security + JWT
