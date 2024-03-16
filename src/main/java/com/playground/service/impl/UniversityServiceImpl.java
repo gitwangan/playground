@@ -24,6 +24,7 @@ public class UniversityServiceImpl implements UniversityService {
         this.restTemplate = restTemplate;
     }
 
+    @Override
     public List<University> getUniversities(List<String> countries, boolean multithreading) {
         if  (null == countries) {
             countries = new ArrayList<>();
@@ -34,9 +35,12 @@ public class UniversityServiceImpl implements UniversityService {
         int i = 0;
         for (String country : countries) {
             if (!multithreading) {
-                res.add(restTemplate.getForObject(url + (country.length() == 0 ? "" : "?country=" + country), University[].class));
+                res.add(restTemplate.getForObject(url + (country.length() == 0 ? "" : "?country=" + country),
+                        University[].class));
             } else {
-                futures[i++] = CompletableFuture.supplyAsync(() -> restTemplate.getForObject(url + (country.length() == 0 ? "" : "?country=" + country), University[].class));
+                futures[i++] = CompletableFuture.supplyAsync(() ->
+                        restTemplate.getForObject(url + (country.length() == 0 ? "" : "?country=" + country),
+                                University[].class));
             }
         }
         if (multithreading) {
@@ -47,4 +51,5 @@ public class UniversityServiceImpl implements UniversityService {
         }
         return res.stream().flatMap(Stream::of).collect(Collectors.toList());
     }
+
 }

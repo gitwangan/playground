@@ -1,3 +1,13 @@
+* CRUD of Employee and Department
+    * Employee: Spring Data JPA is used
+    * `@Query` used on `R`
+    * `@Modifying` and `@Query` used for `D`
+    * Department: JPA Entity Manager + Hibernate is used
+      * Dynamic query building used for `R`
+    * `@Transactional` used on `CUD`
+
+
+
 * Remove duplicate rows in table
   * w/ primary key: 
     * Using inner join: `mysql> delete e1 from employee e1, employee e2 where e1.name = e2.name and e1.salary = e2.salary and e1.id > e2.id;`
