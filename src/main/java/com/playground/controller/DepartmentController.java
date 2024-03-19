@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("hr/department/")
+@RequestMapping("hr/department")
 public class DepartmentController {
     private final DepartmentService departmentService;
 
@@ -19,20 +19,20 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @PostMapping("add")
+    @PostMapping
     public ResponseEntity<Void> addDepartment(@RequestBody Department department) {
         departmentService.addDepartment(department);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("find/name/{name}/minId/{minId}")
-    public ResponseEntity<List<Department>> getDepartmentByNameAndMinId(@PathVariable String name, @PathVariable int minId) {
+    @GetMapping
+    public ResponseEntity<List<Department>> getDepartmentByNameAndMinId(@RequestParam String name, @RequestParam int minId) {
         return new ResponseEntity<>(departmentService.getDepartmentByNameAndMinId(name, minId), HttpStatus.OK);
     }
 
-    @PutMapping("update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Void> updateDepartment(@PathVariable int id, @RequestBody Department department) {
-        if (id != 0 && id != department.getId()) {
+        if (department.getId() != 0 && id != department.getId()) {
             throw new RuntimeException("Cannot update: different value of id in path variable and id in request body");
         }
         department.setId(id);
@@ -40,7 +40,7 @@ public class DepartmentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDepartment(@PathVariable int id) {
         departmentService.deleteDepartment(id);
         return new ResponseEntity<>(HttpStatus.OK);

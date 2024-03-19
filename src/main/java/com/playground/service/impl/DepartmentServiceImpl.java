@@ -4,6 +4,7 @@ import com.playground.pojo.Department;
 import com.playground.pojo.Employee;
 import com.playground.repo.DepartmentRepository;
 import com.playground.service.DepartmentService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    @Transactional
     public void addDepartment(Department department) {
         departmentRepository.save(department);
     }
@@ -33,11 +35,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    @Transactional
     public void updateDepartment(Department department) {
         departmentRepository.update(department);
     }
 
     @Override
+    @Transactional
     public void deleteDepartment(int id) {
         departmentRepository.delete(id);
     }

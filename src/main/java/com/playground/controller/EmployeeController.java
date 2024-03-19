@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("hr/employee/")
+@RequestMapping("hr/employee")
 public class EmployeeController {
     private final EmployeeService employeeService;
 
@@ -19,20 +19,20 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @PostMapping("add")
+    @PostMapping
     public ResponseEntity<Void> addEmployee(@RequestBody Employee employee) {
         employeeService.addEmployee(employee);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("adults")
-    public ResponseEntity<List<Employee>> getEmployee() {
+    @GetMapping("/adults")
+    public ResponseEntity<List<Employee>> getAdultEmployee() {
         return new ResponseEntity<>(employeeService.findAdultEmployee(), HttpStatus.OK);
     }
 
-    @PutMapping("update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Void> updateEmployee(@PathVariable int id, @RequestBody Employee employee) {
-        if (id != 0 && id != employee.getId()) {
+        if (employee.getId() != 0 && id != employee.getId()) {
             throw new RuntimeException("Cannot update: different value of id in path variable and id in request body");
         }
         employee.setId(id);
@@ -40,9 +40,9 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("deleteUnderAge/{age}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable int age) {
-        employeeService.deleteEmployeeUnderAge(age);
+    @DeleteMapping
+    public ResponseEntity<Void> deleteEmployee(@RequestParam int minAge) {
+        employeeService.deleteEmployeeUnderAge(minAge);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

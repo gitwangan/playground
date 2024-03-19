@@ -4,6 +4,7 @@
     * `@Modifying` and `@Query` used for `D`
     * Department: JPA Entity Manager + Hibernate is used
       * Dynamic query building used for `R`
+      * JPQL used for `D` to avoid two queries if deleting by `remove(find())`
     * `@Transactional` used on `CUD`
 
 
